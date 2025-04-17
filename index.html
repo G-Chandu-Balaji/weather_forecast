@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="./src/output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="text-white">
+    <header
+      class="bg-blue-950 text-white p-2 flex justify-between items-center px-5"
+    >
+      <h1 class="text-center text-4xl">Weather forecast</h1>
+      <nav class="flex justify-center gap-2">
+        <input
+          type="text"
+          class="border-amber-50 rounded-2xl border-2 pl-5"
+          id="searchinput"
+        />
+        <button
+          class="py-1 px-3 border-2 bg-amber-300 rounded-xl"
+          id="searchbutton"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+        <button
+          id="locationbutton"
+          class="flex py-1 px-3 border-2 bg-amber-300 rounded-xl gap-1"
+        >
+          <span>
+            <svg
+              version="1.0"
+              id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="20px"
+              height="20px"
+              viewBox="0 0 64 64"
+              enable-background="new 0 0 64 64"
+              xml:space="preserve"
+              fill="#000000"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <g>
+                  <g>
+                    <path
+                      fill="#394240"
+                      d="M32,0C18.745,0,8,10.745,8,24c0,5.678,2.502,10.671,5.271,15l17.097,24.156C30.743,63.686,31.352,64,32,64 s1.257-0.314,1.632-0.844L50.729,39C53.375,35.438,56,29.678,56,24C56,10.745,45.255,0,32,0z M48.087,39h-0.01L32,61L15.923,39 h-0.01C13.469,35.469,10,29.799,10,24c0-12.15,9.85-22,22-22s22,9.85,22,22C54,29.799,50.281,35.781,48.087,39z"
+                    ></path>
+                    <path
+                      fill="#394240"
+                      d="M32,14c-5.523,0-10,4.478-10,10s4.477,10,10,10s10-4.478,10-10S37.523,14,32,14z M32,32 c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.418,32,32,32z"
+                    ></path>
+                    <path
+                      fill="#394240"
+                      d="M32,10c-7.732,0-14,6.268-14,14s6.268,14,14,14s14-6.268,14-14S39.732,10,32,10z M32,36 c-6.627,0-12-5.373-12-12s5.373-12,12-12s12,5.373,12,12S38.627,36,32,36z"
+                    ></path>
+                  </g>
+                  <g>
+                    <path
+                      fill="#F76D57"
+                      d="M32,12c-6.627,0-12,5.373-12,12s5.373,12,12,12s12-5.373,12-12S38.627,12,32,12z M32,34 c-5.522,0-10-4.477-10-10s4.478-10,10-10s10,4.477,10,10S37.522,34,32,34z"
+                    ></path>
+                    <path
+                      fill="#F76D57"
+                      d="M32,2c-12.15,0-22,9.85-22,22c0,5.799,3.469,11.469,5.913,15h0.01L32,61l16.077-22h0.01 C50.281,35.781,54,29.799,54,24C54,11.85,44.15,2,32,2z M32,38c-7.732,0-14-6.268-14-14s6.268-14,14-14s14,6.268,14,14 S39.732,38,32,38z"
+                    ></path>
+                  </g>
+                  <path
+                    opacity="0.2"
+                    fill="#231F20"
+                    d="M32,12c-6.627,0-12,5.373-12,12s5.373,12,12,12s12-5.373,12-12S38.627,12,32,12z M32,34 c-5.522,0-10-4.477-10-10s4.478-10,10-10s10,4.477,10,10S37.522,34,32,34z"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+          </span>
+          location
+        </button>
+      </nav>
+    </header>
+    <main id="hero" class="sm:flex bg-cover bg-center min-h-screen w-full">
+      <aside class="h-[30vh] sm:h-[80vh] sm:w-[30%]">
+        <div
+          class="border-black border-2 w-[80%] mx-auto rounded-2xl mt-5 backdrop-blur-sm"
+        > 
+        <h2>forecast</h2>
+        <div id="forecast5days">
+          <!-- <div id=" forcast_item" class="border-2 border-black bg-gray-600 w-[50%] mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
+            <h2>date</h2>
+            <span><img src="https://openweathermap.org/img/wn/10d@2x.png" class="w-[80px] mt-[-10px]" alt="weather"/></span>
+            <p class="mt-[-20px]"><span>temp :</span>  <span>-----</span></p>
+            <p><span>wind :</span>  <span>------</span></p>
+            <p><span>humidity :</span>  <span>------</span></p>
+          </div> -->
+
+         
+
+        </div>
+        
+
+         <div>
+      </aside>
+      <section class="sm:grow flex flex-col gap-10 capitalize">
+        <h1 class="text-center text-2xl mt-4">Todays Highlights</h1>
+        <div class="grid grid-cols-4 gap-y-5 mx-5 ml-8 place-items-start">
+          <div
+            class="col-span-2 flex flex-col items-center justify-center h-[100%] w-[90%] py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <div id="weatherDesc" class="text-3xl min-w-[max-content]"></div>
+            <div class="" id="image_container"></div>
+
+            <div class="text-4xl flex">
+              <span id="temp"></span>
+              &deg;<span class="text-3xl">C</span>
+            </div>
+
+            <div class="grid grid-cols-10 mt-2 gap-2">
+              <span class="col-span-2"
+                ><img
+                  width="30"
+                  height="30"
+                  src="./public/calendar.png"
+                  alt="calendar"
+              /></span>
+              <span id="date" class="text-md text-gray-200 col-span-8"
+                >Date and time
+              </span>
+
+              <span class="col-span-2"
+                ><img
+                  width="30"
+                  height="30"
+                  src="./public/location.png"
+                  alt="location"
+              /></span>
+              <span id="location" class="text-md text-gray-200 col-span-8"
+                >location
+              </span>
+            </div>
+          </div>
+
+          <div
+            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-2">SunRise</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="https://img.icons8.com/fluency/48/sunrise.png"
+                alt="sunrise"
+              />
+            </div>
+            <div id="SunRise" class="text-2xl">-</div>
+          </div>
+          <div
+            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-2">SunSet</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="https://img.icons8.com/fluency/48/sunset.png"
+                alt="sunset"
+              />
+            </div>
+            <div id="SunSet" class="text-2xl">-</div>
+          </div>
+          <div
+            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-2">Wind</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="./public/images/wind.png"
+                alt="wind"
+              />
+            </div>
+            <div class="text-3xl flex">
+              <span id="wind"></span>
+              <span class="normal-case">m/s</span>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-2">humidity</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="https://img.icons8.com/fluency/48/hygrometer.png"
+                alt="hygrometer"
+              />
+            </div>
+            <div class="text-3xl flex">
+              <span id="humidity"></span>
+              <span class="text-3xl">%</span>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-2">Max-temp</h2>
+            <div>
+              <img
+                width="48"
+                height="48"
+                src="./public/images/temp_max.png"
+                alt="max-temp"
+              />
+            </div>
+            <div class="text-3xl flex">
+              <span id="max-temp"></span>
+              &deg;<span class="text-3xl">C</span>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-2">Min-temp</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="./public/images/temp_min.png"
+                alt="min-temp"
+              />
+            </div>
+
+            <div class="text-3xl flex">
+              <span id="min-temp"></span>
+              &deg;<span class="text-3xl">C</span>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-2">Pressure</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="https://img.icons8.com/fluency/48/barometer-gauge.png"
+                alt="barometer-gauge"
+              />
+            </div>
+            <div class="text-3xl flex">
+              <span id="pressure"></span>
+              <span class="normal-case">hpa</span>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-2">visibility</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="./public/images/eye.png"
+                alt="visible"
+              />
+            </div>
+
+            <div class="flex text-3xl">
+              <span id="visibility" class="text-3xl"> </span>
+              <span class="normal-case">m</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="bg-black">
+      <div>footer</div>
+    </footer>
+    <script src="./src/index.js"></script>
+  </body>
+</html>
