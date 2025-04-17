@@ -92,36 +92,16 @@
         </button>
       </nav>
     </header>
-    <main id="hero" class="sm:flex bg-cover bg-center min-h-screen w-full">
-      <aside class="h-[30vh] sm:h-[80vh] sm:w-[30%]">
-        <div
-          class="border-black border-2 w-[80%] mx-auto rounded-2xl mt-5 backdrop-blur-sm"
-        > 
-        <h2>forecast</h2>
-        <div id="forecast5days">
-          <!-- <div id=" forcast_item" class="border-2 border-black bg-gray-600 w-[50%] mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
-            <h2>date</h2>
-            <span><img src="https://openweathermap.org/img/wn/10d@2x.png" class="w-[80px] mt-[-10px]" alt="weather"/></span>
-            <p class="mt-[-20px]"><span>temp :</span>  <span>-----</span></p>
-            <p><span>wind :</span>  <span>------</span></p>
-            <p><span>humidity :</span>  <span>------</span></p>
-          </div> -->
-
-         
-
-        </div>
-        
-
-         <div>
-      </aside>
-      <section class="sm:grow flex flex-col gap-10 capitalize">
-        <h1 class="text-center text-2xl mt-4">Todays Highlights</h1>
-        <div class="grid grid-cols-4 gap-y-5 mx-5 ml-8 place-items-start">
+    <main id="hero" class=" bg-cover bg-center min-h-screen w-full">
+     
+      <section class=" flex flex-col gap-5 capitalize">
+        <h1 class="text-center text-2xl mt-3">Todays Highlights</h1>
+        <div class="grid grid-cols-7 grid-rows-3  gap-4 h-[45vh] w-[80vw] mx-auto">
           <div
-            class="col-span-2 flex flex-col items-center justify-center h-[100%] w-[90%] py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+            class=" col-span-4 row-span-3 flex flex-col items-center  shadow-xl  rounded-2xl border-2 border-black backdrop-blur-[2px]"
           >
-            <div id="weatherDesc" class="text-3xl min-w-[max-content]"></div>
-            <div class="" id="image_container"></div>
+            <div id="weatherDesc" class="text-3xl min-w-[max-content]">-------------</div>
+            <div class="h-[150px]" id="image_container"></div>
 
             <div class="text-4xl flex">
               <span id="temp"></span>
@@ -154,9 +134,9 @@
           </div>
 
           <div
-            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+            class="col-span-1 grid grid-cols-3 p-2  rounded-2xl border-2 border-black backdrop-blur-[2px]"
           >
-            <h2 class="col-span-2">SunRise</h2>
+            <h2 class="col-span-3">SunRise</h2>
             <div class="col-span-1">
               <img
                 width="48"
@@ -165,12 +145,12 @@
                 alt="sunrise"
               />
             </div>
-            <div id="SunRise" class="text-2xl">-</div>
+            <div id="SunRise" class="text-xl col-span-2 ">-</div>
           </div>
           <div
-            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+            class="col-span-1 grid grid-cols-3 p-2  rounded-2xl border-2 border-black backdrop-blur-[2px]"
           >
-            <h2 class="col-span-2">SunSet</h2>
+            <h2 class="col-span-3">SunSet</h2>
             <div class="col-span-1">
               <img
                 width="48"
@@ -179,12 +159,12 @@
                 alt="sunset"
               />
             </div>
-            <div id="SunSet" class="text-2xl">-</div>
+            <div id="SunSet" class="text-xl col-span-2">-</div>
           </div>
           <div
-            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+            class="col-span-1 grid grid-cols-3 p-2  rounded-2xl border-2 border-black backdrop-blur-[2px]"
           >
-            <h2 class="col-span-2">Wind</h2>
+            <h2 class="col-span-3">Wind</h2>
             <div class="col-span-1">
               <img
                 width="48"
@@ -193,15 +173,15 @@
                 alt="wind"
               />
             </div>
-            <div class="text-3xl flex">
-              <span id="wind"></span>
+            <div class="text-xl flex justify-self-end gap-1 col-span-2">
+              <span id="wind">----</span>
               <span class="normal-case">m/s</span>
             </div>
           </div>
           <div
-            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+            class="col-span-1 grid grid-cols-3 p-2  rounded-2xl border-2 border-black backdrop-blur-[2px]"
           >
-            <h2 class="col-span-2">humidity</h2>
+            <h2 class="col-span-3">humidity</h2>
             <div class="col-span-1">
               <img
                 width="48"
@@ -210,50 +190,50 @@
                 alt="hygrometer"
               />
             </div>
-            <div class="text-3xl flex">
-              <span id="humidity"></span>
-              <span class="text-3xl">%</span>
+            <div class="text-2xl flex justify-self-end gap-1 col-span-2">
+              <span id="humidity">-----</span>
+              <span class="text-2xl">%</span>
             </div>
           </div>
           <div
-            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+            class="col-span-1 grid grid-cols-3 p-2  rounded-2xl border-2 border-black backdrop-blur-[2px]"
           >
-            <h2 class="col-span-2">Max-temp</h2>
-            <div>
-              <img
-                width="48"
-                height="48"
-                src="./public/images/temp_max.png"
-                alt="max-temp"
-              />
-            </div>
-            <div class="text-3xl flex">
-              <span id="max-temp"></span>
-              &deg;<span class="text-3xl">C</span>
-            </div>
-          </div>
-          <div
-            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
-          >
-            <h2 class="col-span-2">Min-temp</h2>
+            <h2 class="col-span-3">Max-temp</h2>
             <div class="col-span-1">
               <img
                 width="48"
                 height="48"
-                src="./public/images/temp_min.png"
+                src="./public/images/max-temp.png"
+                alt="max-temp"
+              />
+            </div>
+            <div class="text-xl flex justify-self-end gap-1 col-span-2">
+              <span id="max-temp">-----</span>
+              &deg;<span class="text-xl">C</span>
+            </div>
+          </div>
+          <div
+            class="col-span-1 grid grid-cols-3 p-2 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-3">Min-temp</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="./public/images/min-temp.png"
                 alt="min-temp"
               />
             </div>
 
-            <div class="text-3xl flex">
-              <span id="min-temp"></span>
-              &deg;<span class="text-3xl">C</span>
+            <div class="text-xl flex justify-self-end gap-1 col-span-2">
+              <span id="min-temp">----</span>
+              &deg;<span class="text-xl">C</span>
             </div>
           </div>
           <div
-            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+            class="col-span-1 grid grid-cols-3 p-2 rounded-2xl border-2 border-black backdrop-blur-[2px]"
           >
-            <h2 class="col-span-2">Pressure</h2>
+            <h2 class="col-span-3">Pressure</h2>
             <div class="col-span-1">
               <img
                 width="48"
@@ -262,15 +242,15 @@
                 alt="barometer-gauge"
               />
             </div>
-            <div class="text-3xl flex">
-              <span id="pressure"></span>
+            <div class="text-xl flex justify-self-end gap-1 col-span-2">
+              <span id="pressure">----</span>
               <span class="normal-case">hpa</span>
             </div>
           </div>
           <div
-            class="grid grid-cols-2 gap-x-15 py-3 px-6 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+            class="col-span-1 grid grid-cols-3 p-2 rounded-2xl border-2 border-black backdrop-blur-[2px]"
           >
-            <h2 class="col-span-2">visibility</h2>
+            <h2 class="col-span-3">visibility</h2>
             <div class="col-span-1">
               <img
                 width="48"
@@ -280,13 +260,59 @@
               />
             </div>
 
-            <div class="flex text-3xl">
-              <span id="visibility" class="text-3xl"> </span>
+            <div class="text-xl flex justify-self-end gap-1 col-span-2">
+              <span id="visibility">----</span>
               <span class="normal-case">m</span>
+            </div>
+          </div>
+          <div
+            class="col-span-1 grid grid-cols-3 p-2 rounded-2xl border-2 border-black backdrop-blur-[2px]"
+          >
+            <h2 class="col-span-3">Feels like</h2>
+            <div class="col-span-1">
+              <img
+                width="48"
+                height="48"
+                src="./public/images/feelslike.png"
+                alt="visible"
+              />
+            </div>
+
+            <div class="text-xl flex justify-self-end gap-1 col-span-2">
+              <span id="feelslike">----</span>
+              &deg;<span class="text-xl">C</span>
             </div>
           </div>
         </div>
       </section>
+      <aside class="">
+        <div
+          class=" w-[80%] mx-auto rounded-2xl mt-5 h-[30vh]  pb-5"
+        > 
+        <h2 class="text-center capitalize text-2xl mb-2">forecast</h2>
+        <div id="forecast5days" class="flex gap-2 h-[90%] ">
+          <!-- <div id=" forcast_item" class="border-2 border-black bg-gray-600 w-[50%] mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
+            <h2>---------</h2>
+            <p>-----------</p>
+            <span><img src="https://openweathermap.org/img/wn/${
+              filterdata[i].weather[0].icon
+            }@2x.png" class="w-[80px] mt-[-10px]" alt="weather"/></span>
+            <p class="mt-[-20px]"><span>temp :</span>  <span>---------</span></p>
+            <p><span>wind :</span>  <span>--------------</span></p>
+            <p><span>humidity :</span>  <span>------------</span></p>
+          </div> -->
+
+          
+
+          
+
+         
+
+        </div>
+        
+
+         <div>
+      </aside>
     </main>
     <footer class="bg-black">
       <div>footer</div>

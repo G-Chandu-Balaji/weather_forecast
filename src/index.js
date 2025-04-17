@@ -7,35 +7,37 @@ const wind = document.getElementById("wind");
 const max_temp = document.getElementById("max-temp");
 const min_temp = document.getElementById("min-temp");
 const visibility = document.getElementById("visibility");
+const feelslike = document.getElementById("feelslike");
 const weatherDesc = document.getElementById("weatherDesc");
 const date = document.getElementById("date");
 const location1 = document.getElementById("location");
 const forecast5days = document.getElementById("forecast5days");
-console.log("forecast element", forecast5days);
-console.log("wind", wind);
 
 const API_KEY = "8a9726b8904e79e01949aa5196bf126f";
 
+// search button
 const searchButton = document.getElementById("searchbutton");
 searchButton.addEventListener("click", () => {
   const searchInput = document.getElementById("searchinput").value;
-  console.log(searchInput);
   geocoding(searchInput);
 });
 
+//location button
 const locationButton = document.getElementById("locationbutton");
 locationButton.addEventListener("click", () => {
   navigator.geolocation.getCurrentPosition((position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    console.log(lat, lon);
     reverseGeocode(lat, lon);
     weatherdata(lat, lon);
     forecast(lat, lon);
   });
 });
 
+//functions for weather and place
+
 async function geocoding(city) {
+  location1.textContent = city;
   try {
     const URL = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`;
     const res = await fetch(URL);
@@ -67,6 +69,7 @@ async function weatherdata(lat, lon) {
     min_temp.textContent = data.main.temp_min;
     max_temp.textContent = data.main.temp_max;
     visibility.textContent = data.visibility;
+    feelslike.textContent = data.main.feels_like;
     wind.textContent = data.wind.speed;
     weatherDesc.textContent = data.weather[0].description;
     date.textContent = dateAndTime(data.dt, data.timezone);
@@ -78,6 +81,7 @@ async function weatherdata(lat, lon) {
     image.width = 150;
     image.id = "image_icon";
     document.getElementById("image_container").appendChild(image);
+    changeBackground(data.weather[0].icon, data.weather[0].main);
   } catch (err) {
     console.log(err.message);
   }
@@ -100,16 +104,27 @@ async function forecast(lat, lon) {
     const res = await fetch(URL);
     const data = await res.json();
     console.log("forecast", data);
-    // forecast5days.innerHTML = "";
-    for (let i = 0; i < 2; i++) {
+    const filterdata = data.list.filter((ele) =>
+      ele.dt_txt.includes("12:00:00")
+    );
+
+    forecast5days.innerHTML = "";
+    for (let i = 0; i < filterdata.length; i++) {
       console.log("hi");
       forecast5days.innerHTML += `
-      <div id=" forcast_item" class="border-2 border-black bg-gray-600 w-[50%] mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
-            <h2>date</h2>
-            <span><img src="https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png" class="w-[80px] mt-[-10px]" alt="weather"/></span>
-            <p class="mt-[-20px]"><span>temp :</span>  <span>${data.list[i].main.temp}</span></p>
-            <p><span>wind :</span>  <span>${data.list[i].wind.speed}</span></p>
-            <p><span>humidity :</span>  <span>${data.list[i].main.humidity}</span></p>
+      <div id=" forcast_item" class="border-1 border-black bg-white/10 shadow-2xl/30 backdrop-blur-xs w-[50%] mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
+            <h2>${filterdata[i].dt_txt.split(" ")[0]}</h2>
+            <p>${filterdata[i].weather[0].description}</p>
+            <span><img src="https://openweathermap.org/img/wn/${
+              filterdata[i].weather[0].icon
+            }@2x.png" class="w-[80px] mt-[-10px]" alt="weather"/></span>
+            <p class="mt-[-20px]"><span>temp :</span>  <span>${
+              filterdata[i].main.temp
+            }</span></p>
+            <p><span>wind :</span>  <span>${filterdata[i].wind.speed}</span></p>
+            <p><span>humidity :</span>  <span>${
+              filterdata[i].main.humidity
+            }</span></p>
           </div>`;
     }
   } catch (err) {
@@ -117,10 +132,9 @@ async function forecast(lat, lon) {
   }
 }
 
+// change timestamp to human readable time
 function dateAndTime(unixTimestamp, timezone) {
   const date = new Date(unixTimestamp * 1000 + timezone * 1000); // Convert to milliseconds
-
-  // return date.toUTCString(); // Example: "Wed, 16 Apr 2025 12:00:00 GMT"
   return date.toUTCString() + formatOffset(timezone);
 
   // Helper to format offset like "+05:30"
@@ -136,6 +150,7 @@ function dateAndTime(unixTimestamp, timezone) {
     return `${sign}${hours}:${minutes}`;
   }
 }
+
 function time(timee, timezone) {
   const date = new Date(timee * 1000 + timezone * 1000);
   let hours = date.getUTCHours();
@@ -149,13 +164,16 @@ function time(timee, timezone) {
   return `${hours.toString().padStart(2, "0")}:${minutes} ${period}`;
 }
 
-const condition = true; // or some logic
-const hero = document.getElementById("hero");
+// background images change
+function changeBackground(icon, main) {
+  if (main === "Clouds" || main === "Clear") {
+    console.log("hellllllllllllo");
+  } else {
+    const path = `/public/background_images/${main}.jpg`;
 
-const path = "/public/background_images/mist.jpg";
-
-if (condition) {
-  hero.style.backgroundImage = `url(${path})`;
-} else {
-  hero.style.backgroundImage = "none";
+    hero.style.backgroundImage = `url(${path})`;
+  }
 }
+
+const hero = document.getElementById("hero");
+hero.style.backgroundImage = "url(/public/background_images/background2.jpg)";
