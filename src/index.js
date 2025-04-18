@@ -79,6 +79,7 @@ async function weatherdata(lat, lon) {
     image.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     image.alt = "weather icon";
     image.width = 150;
+    // image.classList.add("sm:w-[150px] sm:h-[150px] w-[80px] h-[80px]");
     image.id = "image_icon";
     document.getElementById("image_container").appendChild(image);
     changeBackground(data.weather[0].icon, data.weather[0].main);
@@ -112,7 +113,7 @@ async function forecast(lat, lon) {
     for (let i = 0; i < filterdata.length; i++) {
       console.log("hi");
       forecast5days.innerHTML += `
-      <div id=" forcast_item" class="border-1 border-black bg-white/10 shadow-2xl/30 backdrop-blur-xs w-[50%] mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
+      <div id=" forcast_item" class="border-1 border-black bg-white/10 shadow-2xl/30 backdrop-blur-xs w-[45%] sm:w-[50%]  ml-2 mr-auto sm:mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
             <h2>${filterdata[i].dt_txt.split(" ")[0]}</h2>
             <p>${filterdata[i].weather[0].description}</p>
             <span><img src="https://openweathermap.org/img/wn/${
