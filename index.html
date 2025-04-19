@@ -15,15 +15,26 @@
   </head>
   <body class="text-white p-0 m-0 sm:min-h-[127vh] lg:min-h-[90vh] box-border">
     <header
-      class="bg-blue-950 text-white p-2 flex flex-col sm:flex-row justify-between items-center px-5 gap-2.5"
+      class="bg-blue-950 text-white p-2 flex flex-col sm:flex-row justify-between items-center px-10 gap-2.5"
     >
-      <h1 class="text-center text-3xl lg:text-4xl">Weather forecast</h1>
+      <h1
+        class="text-center text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-white to-green-900"
+      >
+        Weather forecast
+      </h1>
       <nav class="flex flex-col sm:flex-row justify-center gap-2">
-        <input
-          type="text"
-          class="border-amber-50 rounded-2xl border-2 pl-5"
-          id="searchinput"
-        />
+        <div class="relative flex flex-col items-center">
+          <input
+            type="text"
+            class="border-amber-50 rounded-2xl border-2 pl-5 py-[3px]"
+            id="searchinput"
+            placeholder="Enter city..."
+          />
+          <div
+            id="dropdown"
+            class="absolute top-[28px] max-h-[15vh] w-[90%] mx-auto overflow-y-auto border-1 pl-3 bg-blue-950 rounded-md hidden z-[1000]"
+          ></div>
+        </div>
         <div class="flex gap-1.5">
           <button
             class="py-1 px-3 border-2 bg-amber-300 rounded-xl"
@@ -36,60 +47,14 @@
             class="flex py-1 px-3 border-2 bg-amber-300 rounded-xl gap-1"
           >
             <span>
-              <svg
-                version="1.0"
-                id="Layer_1"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                width="20px"
-                height="20px"
-                viewBox="0 0 64 64"
-                enable-background="new 0 0 64 64"
-                xml:space="preserve"
-                fill="#000000"
-              >
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  <g>
-                    <g>
-                      <path
-                        fill="#394240"
-                        d="M32,0C18.745,0,8,10.745,8,24c0,5.678,2.502,10.671,5.271,15l17.097,24.156C30.743,63.686,31.352,64,32,64 s1.257-0.314,1.632-0.844L50.729,39C53.375,35.438,56,29.678,56,24C56,10.745,45.255,0,32,0z M48.087,39h-0.01L32,61L15.923,39 h-0.01C13.469,35.469,10,29.799,10,24c0-12.15,9.85-22,22-22s22,9.85,22,22C54,29.799,50.281,35.781,48.087,39z"
-                      ></path>
-                      <path
-                        fill="#394240"
-                        d="M32,14c-5.523,0-10,4.478-10,10s4.477,10,10,10s10-4.478,10-10S37.523,14,32,14z M32,32 c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.418,32,32,32z"
-                      ></path>
-                      <path
-                        fill="#394240"
-                        d="M32,10c-7.732,0-14,6.268-14,14s6.268,14,14,14s14-6.268,14-14S39.732,10,32,10z M32,36 c-6.627,0-12-5.373-12-12s5.373-12,12-12s12,5.373,12,12S38.627,36,32,36z"
-                      ></path>
-                    </g>
-                    <g>
-                      <path
-                        fill="#F76D57"
-                        d="M32,12c-6.627,0-12,5.373-12,12s5.373,12,12,12s12-5.373,12-12S38.627,12,32,12z M32,34 c-5.522,0-10-4.477-10-10s4.478-10,10-10s10,4.477,10,10S37.522,34,32,34z"
-                      ></path>
-                      <path
-                        fill="#F76D57"
-                        d="M32,2c-12.15,0-22,9.85-22,22c0,5.799,3.469,11.469,5.913,15h0.01L32,61l16.077-22h0.01 C50.281,35.781,54,29.799,54,24C54,11.85,44.15,2,32,2z M32,38c-7.732,0-14-6.268-14-14s6.268-14,14-14s14,6.268,14,14 S39.732,38,32,38z"
-                      ></path>
-                    </g>
-                    <path
-                      opacity="0.2"
-                      fill="#231F20"
-                      d="M32,12c-6.627,0-12,5.373-12,12s5.373,12,12,12s12-5.373,12-12S38.627,12,32,12z M32,34 c-5.522,0-10-4.477-10-10s4.478-10,10-10s10,4.477,10,10S37.522,34,32,34z"
-                    ></path>
-                  </g>
-                </g>
-              </svg>
+              <img
+                width="20"
+                height="20"
+                src="./public/location_search.png"
+                alt="location"
+              />
             </span>
-            location
+            Location
           </button>
         </div>
       </nav>

@@ -37,20 +37,38 @@ locationButton.addEventListener("click", () => {
 //functions for weather and place
 
 async function geocoding(city) {
-  location1.textContent = city;
   try {
     const URL = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`;
     const res = await fetch(URL);
     const data = await res.json();
+    if (data.length === 0) {
+      alert("Please enter valid city");
+
+      throw new Error("Please enter valid city");
+    }
+    location1.textContent = `${data[0].name}, ${data[0].state}`;
+
+    storeUniqueCity(city);
+
     let lat = data[0].lat;
     let lon = data[0].lon;
     let state = data[0].state;
-    console.log(lat, lon, state);
+
     forecast(lat, lon);
     return weatherdata(lat, lon);
   } catch (err) {
     console.log(err);
   }
+}
+
+function reverseGeocode(lat, lon) {
+  fetch(
+    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      location1.textContent = `${data.address.city},${data.address.state},${data.address.country}`;
+    });
 }
 
 async function weatherdata(lat, lon) {
@@ -62,7 +80,7 @@ async function weatherdata(lat, lon) {
   try {
     const res = await fetch(URL);
     const data = await res.json();
-    console.log(data);
+
     temp.textContent = data.main.temp;
     humidity.textContent = data.main.humidity;
     pressure.textContent = data.main.pressure;
@@ -79,7 +97,6 @@ async function weatherdata(lat, lon) {
     image.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     image.alt = "weather icon";
     image.width = 150;
-    // image.classList.add("sm:w-[150px] sm:h-[150px] w-[80px] h-[80px]");
     image.id = "image_icon";
     document.getElementById("image_container").appendChild(image);
     changeBackground(data.weather[0].icon, data.weather[0].main);
@@ -88,30 +105,18 @@ async function weatherdata(lat, lon) {
   }
 }
 
-function reverseGeocode(lat, lon) {
-  fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      location1.textContent = `${data.address.city},${data.address.state},${data.address.country}`;
-      console.log("Location:", data.display_name);
-    });
-}
-
 async function forecast(lat, lon) {
   const URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
   try {
     const res = await fetch(URL);
     const data = await res.json();
-    console.log("forecast", data);
+
     const filterdata = data.list.filter((ele) =>
       ele.dt_txt.includes("12:00:00")
     );
 
     forecast5days.innerHTML = "";
     for (let i = 0; i < filterdata.length; i++) {
-      console.log("hi");
       forecast5days.innerHTML += `
       <div id=" forcast_item" class="border-1 border-black bg-white/10 shadow-2xl/30 backdrop-blur-xs w-[45%] sm:w-[50%]  ml-2 mr-auto sm:mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
             <h2>${filterdata[i].dt_txt.split(" ")[0]}</h2>
@@ -165,10 +170,73 @@ function time(timee, timezone) {
   return `${hours.toString().padStart(2, "0")}:${minutes} ${period}`;
 }
 
+//store searched citites and dropdown suggestions from local storage
+const inputelement = document.getElementById("searchinput");
+const dropdown = document.getElementById("dropdown");
+
+function getSavedCitites() {
+  return JSON.parse(localStorage.getItem("searchCities"));
+}
+
+function storeUniqueCity(city) {
+  let cities = getSavedCitites();
+  city = city.trim();
+  if (!cities.includes(city)) {
+    cities.push(city);
+    localStorage.setItem("searchCities", JSON.stringify(cities));
+  }
+}
+function showDropdown(cities) {
+  dropdown.innerHTML = "";
+
+  if (cities.length === 0) {
+    dropdown.style.display = "none";
+    return;
+  }
+  cities.forEach((city) => {
+    const item = document.createElement("div");
+    item.className = "";
+    item.textContent = city;
+    item.onclick = () => {
+      inputelement.value = city;
+      dropdown.style.display = "none";
+    };
+    dropdown.appendChild(item);
+  });
+
+  dropdown.style.display = "block";
+}
+
+inputelement.addEventListener("input", () => {
+  let savedCities = getSavedCitites();
+  showDropdown(savedCities);
+});
+
+inputelement.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const city = inputelement.value.trim();
+    if (city.length === 0) {
+      alert("Enter the city name");
+    }
+    if (city) {
+      geocoding(city);
+      dropdown.style.display = "none";
+      inputelement.value = ""; // Optional: clear input
+    }
+  }
+});
+
+//if clicked outside input dropdown closes
+document.addEventListener("click", (e) => {
+  if (!inputelement.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.style.display = "none";
+  }
+});
+
 // background images change
 function changeBackground(icon, main) {
   if (main === "Clouds" || main === "Clear") {
-    console.log("hellllllllllllo");
   } else {
     const path = `/public/background_images/${main}.jpg`;
 
