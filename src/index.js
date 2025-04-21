@@ -1,3 +1,4 @@
+// accessing all elements
 const temp = document.getElementById("temp");
 const SunRise = document.getElementById("SunRise");
 const SunSet = document.getElementById("SunSet");
@@ -34,7 +35,9 @@ locationButton.addEventListener("click", () => {
   });
 });
 
-//functions for weather and place
+//------------------------------------------------------------------
+
+//functions to get  latiitude and lognitude of entered city
 
 async function geocoding(city) {
   try {
@@ -61,6 +64,8 @@ async function geocoding(city) {
   }
 }
 
+// To get city name based on location
+
 function reverseGeocode(lat, lon) {
   fetch(
     `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
@@ -70,6 +75,8 @@ function reverseGeocode(lat, lon) {
       location1.textContent = `${data.address.city},${data.address.state},${data.address.country}`;
     });
 }
+
+//To get weather data
 
 async function weatherdata(lat, lon) {
   const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
@@ -105,6 +112,8 @@ async function weatherdata(lat, lon) {
   }
 }
 
+//To get forcast Data
+
 async function forecast(lat, lon) {
   const URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
   try {
@@ -118,7 +127,7 @@ async function forecast(lat, lon) {
     forecast5days.innerHTML = "";
     for (let i = 0; i < filterdata.length; i++) {
       forecast5days.innerHTML += `
-      <div id=" forcast_item" class="border-1 border-black bg-white/10 shadow-2xl/30 backdrop-blur-xs w-[45%] sm:w-[50%]  ml-2 mr-auto sm:mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
+      <div id=" forcast_item" class="border-1 border-black bg-white/10 shadow-2xl/30 backdrop-blur-[30px] w-[45%] sm:w-[50%]  ml-2 mr-auto sm:mx-auto rounded-2xl flex flex-col justify-center items-center py-2 capitalize">
             <h2>${filterdata[i].dt_txt.split(" ")[0]}</h2>
             <p>${filterdata[i].weather[0].description}</p>
             <span><img src="https://openweathermap.org/img/wn/${
@@ -126,11 +135,13 @@ async function forecast(lat, lon) {
             }@2x.png" class="w-[80px] mt-[-10px]" alt="weather"/></span>
             <p class="mt-[-20px]"><span>temp :</span>  <span>${
               filterdata[i].main.temp
-            }</span></p>
-            <p><span>wind :</span>  <span>${filterdata[i].wind.speed}</span></p>
+            } &deg;C</span></p>
+            <p><span>wind :</span>  <span>${
+              filterdata[i].wind.speed
+            }</span><span class="normal-case">m/s</span?</p>
             <p><span>humidity :</span>  <span>${
               filterdata[i].main.humidity
-            }</span></p>
+            }%</span></p>
           </div>`;
     }
   } catch (err) {
@@ -157,6 +168,7 @@ function dateAndTime(unixTimestamp, timezone) {
   }
 }
 
+//change timestamp according to timezone and also in 12-hours format
 function time(timee, timezone) {
   const date = new Date(timee * 1000 + timezone * 1000);
   let hours = date.getUTCHours();
@@ -170,7 +182,10 @@ function time(timee, timezone) {
   return `${hours.toString().padStart(2, "0")}:${minutes} ${period}`;
 }
 
+//-----------------------------------------------------------------------------
+
 //store searched citites and dropdown suggestions from local storage
+
 const inputelement = document.getElementById("searchinput");
 const dropdown = document.getElementById("dropdown");
 
@@ -186,6 +201,7 @@ function storeUniqueCity(city) {
     localStorage.setItem("searchCities", JSON.stringify(cities));
   }
 }
+
 function showDropdown(cities) {
   dropdown.innerHTML = "";
 
@@ -207,11 +223,14 @@ function showDropdown(cities) {
   dropdown.style.display = "block";
 }
 
+//adding  event listerner to input  and show dropdown with stored data
+
 inputelement.addEventListener("input", () => {
   let savedCities = getSavedCitites();
   showDropdown(savedCities);
 });
 
+// if new enter save ciy on enter
 inputelement.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -234,9 +253,13 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// background images change
+//-------------------------------------------------------------------------------------------
+
+//To change background image according to weather condition
+
 function changeBackground(icon, main) {
   if (main === "Clouds" || main === "Clear") {
+    hero.style.backgroundImage = `url(/public/background_images/${icon}.jpg)`;
   } else {
     const path = `/public/background_images/${main}.jpg`;
 
@@ -245,4 +268,6 @@ function changeBackground(icon, main) {
 }
 
 const hero = document.getElementById("hero");
-hero.style.backgroundImage = "url(/public/background_images/background2.jpg)";
+
+//default background on mount
+hero.style.backgroundImage = "url(/public/background_images/background1.jpg)";
